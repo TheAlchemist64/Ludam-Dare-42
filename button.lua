@@ -1,10 +1,10 @@
-Button = {}
+local Button = {}
 
 function Button:new (x, y, width, height, label)
   local o = {
     x=x,
     y=y,
-    width=width
+    width=width,
     height=height,
     label=label,
     style={
@@ -33,10 +33,14 @@ end
 function Button:draw ()
   love.graphics.setColor(unpack(self.style.border))
   love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
-  love.graphics.setColor(unpack(self.style.bg))
-  love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+  if self.style.bg then
+    love.graphics.setColor(unpack(self.style.bg))
+    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+  end
   love.graphics.setColor(unpack(self.style.fg))
   love.graphics.setFont(self._font)
   local padding = self.style.padding
   love.graphics.print(self.label, self.x + padding, self.y + padding)
 end
+
+return Button
