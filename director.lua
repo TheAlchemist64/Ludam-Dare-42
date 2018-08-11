@@ -1,9 +1,9 @@
 local Director = {scene = nil}
 
 --Change current scene
-function Director:changeScene(scene)
+function Director:changeScene(scene, ...)
   self.scene = scene
-  scene:load()
+  scene:load(...)
 end
 --Update current scene
 function Director:update(dt)
