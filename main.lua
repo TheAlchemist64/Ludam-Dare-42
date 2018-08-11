@@ -2,6 +2,8 @@ Director = require "director"
 Trader = require "trader"
 Trade = require "scenes.trade"
 
+MAX_WARE_TYPES = 10
+
 function love.load()
   width, height = love.graphics.getDimensions()
   player = Trader:new("Player")

@@ -31,6 +31,18 @@ function Trade:draw ()
   love.graphics.print(pc, width/4 - pc:len() * 3, h1 + h2)
   local tc = self.trader.credits.." credits"
   love.graphics.print(tc, width * 0.75 - tc:len() * 3, h1 + h2)
+  --Show wares
+  love.graphics.setFont(self.h3)
+  local curH = h1 + h2 + 12 + 3
+  love.graphics.rectangle("line", 0, curH, width/2, h3 * MAX_WARE_TYPES)
+  love.graphics.rectangle("line", width/2, curH, width/2, h3 * MAX_WARE_TYPES)
+  if next(self.trader.q) then
+    local i = 0
+    for item, n in pairs(self.trader.q) do
+      love.graphics.print(item, width/2 + 2, curH + h3 * i)
+      i = i + 1
+    end
+  end
 end
 
 return Trade
