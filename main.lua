@@ -1,7 +1,7 @@
-require "director"
+Director = require "director"
 
 function love.load()
-  
+
 end
 
 function love.update(dt)

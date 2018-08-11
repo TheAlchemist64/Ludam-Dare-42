@@ -1,4 +1,4 @@
-Director = {scene = nil}
+local Director = {scene = nil}
 
 --Change current scene
 function Director:changeScene(scene)
@@ -17,3 +17,5 @@ function Director:draw()
     self.scene:draw()
   end
 end
+
+return Director
