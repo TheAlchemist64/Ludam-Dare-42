@@ -5,7 +5,10 @@ Trade = require "scenes.trade"
 function love.load()
   width, height = love.graphics.getDimensions()
   player = Trader:new("Player")
-  Director:changeScene(Trade, "Placeholder")
+  --Test Trader
+  zuzu = Trader:new("Zuzu")
+  zuzu.q['zufa'] = 10
+  Director:changeScene(Trade, "Placeholder", zuzu)
 end
 
 function love.update(dt)
