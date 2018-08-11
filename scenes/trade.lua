@@ -36,12 +36,23 @@ function Trade:draw ()
   local curH = h1 + h2 + 12 + 3
   love.graphics.rectangle("line", 0, curH, width/2, h3 * MAX_WARE_TYPES)
   love.graphics.rectangle("line", width/2, curH, width/2, h3 * MAX_WARE_TYPES)
+  if next(player.q) then
+    local i = 0
+    for item, n in pairs(player.q) do
+      love.graphics.print(item, 2, curH + h3 * i)
+      i = i + 1
+    end
+  else
+    love.graphics.print("No Wares", 2, curH)
+  end
   if next(self.trader.q) then
     local i = 0
     for item, n in pairs(self.trader.q) do
       love.graphics.print(item, width/2 + 2, curH + h3 * i)
       i = i + 1
     end
+  else
+    love.graphics.print("No Wares", width/2 + 2, curH)
   end
 end
 
