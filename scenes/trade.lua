@@ -209,6 +209,16 @@ function Trade:mousereleased (x, y, button)
   if button == 1 then
     checkButtonClicked(x, y, self.playerB)
     checkButtonClicked(x, y, self.traderB)
+    if self.reset:clicked(x, y) then
+      for item,q in pairs(self.deal.player) do
+        player.q[item] = player.q[item] + q
+      end
+      self.deal.player = {}
+      for item,q in pairs(self.deal.trader) do
+        self.trader.q[item] = self.trader.q[item] + q
+      end
+      self.deal.trader = {}
+    end
   end
 end
 
