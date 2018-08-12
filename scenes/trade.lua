@@ -10,19 +10,9 @@ local dealY = waresY + h3 * MAX_WARE_TYPES
 local dealT = dealY + h2 + 2
 local finalY = dealT + h3 * MAX_WARE_TYPES
 
-function Trade:load (loc, trader)
-  self.loc = loc
-  self.trader = trader
-  self.prices = {}
-  for ware,q in pairs(trader.q) do
-    self.prices[ware] = (MAX_WARE_SUPPLY + 2) - q --price is inverse to supply
-  end
-  self.h1 = love.graphics.newFont(h1)
-  self.h2 = love.graphics.newFont(h2)
-  self.h3 = love.graphics.newFont(h3)
-  self.default = love.graphics.newFont()
-  self.playerB = {}
-  self.traderB = {}
+function loadButtons ()
+  Trade.playerB = {}
+  Trade.traderB = {}
   local i = 0
   for ware,q in pairs(player.q) do
     local pb = Button:new(width/2 - 32, waresY + i * 20, 16, 20, "+")
@@ -37,28 +27,42 @@ function Trade:load (loc, trader)
     mb['inv'] = player.q
     mb['ware'] = ware
     mb['change'] = 1
-    table.insert(self.playerB, pb)
-    table.insert(self.playerB, mb)
+    table.insert(Trade.playerB, pb)
+    table.insert(Trade.playerB, mb)
     i = i + 1
   end
   i = 0
-  for ware,q in pairs(self.trader.q) do
+  for ware,q in pairs(Trade.trader.q) do
     local pb = Button:new(width - 32, waresY + i * 20, 16, 20, "+")
     local mb = Button:new(width - 16, waresY + i * 20, 16, 20, "-")
     pb:setStyle{fSize=h3}
     mb:setStyle{fSize=h3, padding={4,0}}
     pb['side'] = 'trader'
-    pb['inv'] = self.trader.q
+    pb['inv'] = Trade.trader.q
     pb['ware'] = ware
     pb['change'] = -1
     mb['side'] = 'trader'
-    mb['inv'] = self.trader.q
+    mb['inv'] = Trade.trader.q
     mb['ware'] = ware
     mb['change'] = 1
-    table.insert(self.traderB, pb)
-    table.insert(self.traderB, mb)
+    table.insert(Trade.traderB, pb)
+    table.insert(Trade.traderB, mb)
     i = i + 1
   end
+end
+
+function Trade:load (loc, trader)
+  self.loc = loc
+  self.trader = trader
+  self.prices = {}
+  for ware,q in pairs(trader.q) do
+    self.prices[ware] = (MAX_WARE_SUPPLY + 2) - q --price is inverse to supply
+  end
+  self.h1 = love.graphics.newFont(h1)
+  self.h2 = love.graphics.newFont(h2)
+  self.h3 = love.graphics.newFont(h3)
+  self.default = love.graphics.newFont()
+  loadButtons()
   self.deal={player={}, trader={}}
   self.reset = Button:new(width/2 - 75, finalY + h3, 75, h3 + 2, "Reset")
   self.reset:setStyle{fSize=h3, padding={16,0}}
@@ -233,9 +237,13 @@ function Trade:mousereleased (x, y, button)
           self.trader.q[item] = 0
         end
         self.trader.q[item] = self.trader.q[item] + q
+        if not self.prices[item] then
+          self.prices[item] = (MAX_WARE_SUPPLY + 2)/2
+        end
       end
       self.deal.player = {}
       self.trader.credits = self.trader.credits - self.total
+      loadButtons()
     end
   end
 end
