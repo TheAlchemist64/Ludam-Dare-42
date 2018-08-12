@@ -152,6 +152,29 @@ function Trade:draw ()
       end
     end
   end
+  --Show Resulting transaction
+  local finalY = dealT + h3 * MAX_WARE_TYPES
+  love.graphics.setFont(self.h2)
+  love.graphics.print("Result:", 0, finalY)
+  local total = 0
+  for item, n in pairs(self.deal['player']) do
+    if n > 0 then
+      if self.prices[item] then
+        total = total + self.prices[item] * n
+      else
+        total = total + (MAX_WARE_SUPPLY + 2)/2 * n
+      end
+    end
+  end
+  for item, n in pairs(self.deal['trader']) do
+    if n > 0 then
+      total = total - self.prices[item] * n
+    end
+  end
+  local fpcStr = (player.credits + total).." credits"
+  love.graphics.print(fpcStr, width/4 - fpcStr:len() * h2/4, finalY)
+  local tpcStr = (self.trader.credits - total).." credits"
+  love.graphics.print(tpcStr, width * 0.75 - tpcStr:len() * h2/4, finalY)
 end
 
 function checkButtonClicked (x, y, buttons)
