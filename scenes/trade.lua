@@ -22,9 +22,11 @@ function Trade:load (loc, trader)
     local mb = Button:new(width/2 - 16, waresY + i * 20, 16, 20, "-")
     pb:setStyle{fSize=h3}
     mb:setStyle{fSize=h3, padding={4,0}}
+    pb['side'] = 'player'
     pb['inv'] = player.q
     pb['ware'] = ware
     pb['change'] = 1
+    mb['side'] = 'player'
     mb['inv'] = player.q
     mb['ware'] = ware
     mb['change'] = -1
@@ -38,9 +40,11 @@ function Trade:load (loc, trader)
     local mb = Button:new(width - 16, waresY + i * 20, 16, 20, "-")
     pb:setStyle{fSize=h3}
     mb:setStyle{fSize=h3, padding={4,0}}
+    pb['side'] = 'trader'
     pb['inv'] = self.trader.q
     pb['ware'] = ware
     pb['change'] = 1
+    mb['side'] = 'trader'
     mb['inv'] = self.trader.q
     mb['ware'] = ware
     mb['change'] = -1
@@ -107,15 +111,42 @@ function Trade:draw ()
   local dealT = dealY + h2 + 2
   love.graphics.setFont(self.h2)
   love.graphics.print("Deal", width/2 - h2 - 4, dealY)
+  love.graphics.setFont(self.h3)
   love.graphics.rectangle("line", 0, dealT, width/2, h3 * MAX_WARE_TYPES)
   love.graphics.rectangle("line", width/2, dealT, width/2, h3 * MAX_WARE_TYPES)
+  if next(self.deal['player']) then
+    local i = 0
+    for item, n in pairs(self.deal['player']) do
+      local h = dealT + h3 * i
+      love.graphics.print(item, 2, h)
+      love.graphics.print(n, width/2 - 54, h)
+      i = i + 1
+    end
+  end
+  if next(self.deal['trader']) then
+    local i = 0
+    for item, n in pairs(self.deal['trader']) do
+      local h = dealT + h3 * i
+      love.graphics.print(item, width/2 + 2, h)
+      love.graphics.print(n, width - 54, h)
+      i = i + 1
+    end
+  end
 end
 
 function checkButtonClicked (x, y, buttons)
   for _,b in ipairs(buttons) do
     if b:clicked(x, y) then
-      local q = b['inv'][b['ware']]
-      b['inv'][b['ware']] = q + b['change']
+      local side = b['side']
+      local ware = b['ware']
+      local q = b['inv'][ware]
+      local dq = Trade.deal[side][ware]
+      if not dq then
+        Trade.deal[side][ware] = 0
+        dq = 0
+      end
+      b['inv'][ware] = q + b['change']
+      Trade.deal[side][ware] = dq - b['change']
     end
   end
 end
