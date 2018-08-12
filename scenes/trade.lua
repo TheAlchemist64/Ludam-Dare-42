@@ -25,11 +25,11 @@ function Trade:load (loc, trader)
     pb['side'] = 'player'
     pb['inv'] = player.q
     pb['ware'] = ware
-    pb['change'] = 1
+    pb['change'] = -1
     mb['side'] = 'player'
     mb['inv'] = player.q
     mb['ware'] = ware
-    mb['change'] = -1
+    mb['change'] = 1
     table.insert(self.playerB, pb)
     table.insert(self.playerB, mb)
     i = i + 1
@@ -43,11 +43,11 @@ function Trade:load (loc, trader)
     pb['side'] = 'trader'
     pb['inv'] = self.trader.q
     pb['ware'] = ware
-    pb['change'] = 1
+    pb['change'] = -1
     mb['side'] = 'trader'
     mb['inv'] = self.trader.q
     mb['ware'] = ware
-    mb['change'] = -1
+    mb['change'] = 1
     table.insert(self.traderB, pb)
     table.insert(self.traderB, mb)
     i = i + 1
