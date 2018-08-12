@@ -3,16 +3,16 @@ MAX_WARE_SUPPLY = 10
 
 Director = require "director"
 Trader = require "trader"
-Trade = require "scenes.trade"
+--Trade = require "scenes.trade"
+Galaxy = require "scenes.galaxy"
 
 function love.load()
   width, height = love.graphics.getDimensions()
+  rng = love.math.newRandomGenerator()
+  rng:setSeed(os.time())
   player = Trader:new("Player")
   player.q['fuel'] = 10
-  --Test Trader
-  zuzu = Trader:new("Zuzu")
-  zuzu.q['zufa'] = 10
-  Director:changeScene(Trade, "Placeholder", zuzu)
+  Director:changeScene(Galaxy, 10)
 end
 
 function love.update(dt)
