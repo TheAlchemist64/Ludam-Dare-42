@@ -49,7 +49,9 @@ function Trade:draw ()
   if next(player.q) then
     local i = 0
     for item, n in pairs(player.q) do
-      love.graphics.print(item, 2, waresY + h3 * i)
+      local h = waresY + h3 * i
+      love.graphics.print(item, 2, h)
+      love.graphics.print(n, width/2 - 64, h)
       i = i + 1
     end
   else
@@ -58,7 +60,9 @@ function Trade:draw ()
   if next(self.trader.q) then
     local i = 0
     for item, n in pairs(self.trader.q) do
-      love.graphics.print(item, width/2 + 2, waresY + h3 * i)
+      local h = waresY + h3 * i
+      love.graphics.print(item, width/2 + 2, h)
+      love.graphics.print(n, width - 64, h)
       i = i + 1
     end
     for _,b in ipairs(self.traderB) do
