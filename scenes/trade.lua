@@ -117,19 +117,23 @@ function Trade:draw ()
   if next(self.deal['player']) then
     local i = 0
     for item, n in pairs(self.deal['player']) do
-      local h = dealT + h3 * i
-      love.graphics.print(item, 2, h)
-      love.graphics.print(n, width/2 - 54, h)
-      i = i + 1
+      if n > 0 then
+        local h = dealT + h3 * i
+        love.graphics.print(item, 2, h)
+        love.graphics.print(n, width/2 - 54, h)
+        i = i + 1
+      end
     end
   end
   if next(self.deal['trader']) then
     local i = 0
     for item, n in pairs(self.deal['trader']) do
-      local h = dealT + h3 * i
-      love.graphics.print(item, width/2 + 2, h)
-      love.graphics.print(n, width - 54, h)
-      i = i + 1
+      if n > 0 then
+        local h = dealT + h3 * i
+        love.graphics.print(item, width/2 + 2, h)
+        love.graphics.print(n, width - 54, h)
+        i = i + 1
+      end
     end
   end
 end
