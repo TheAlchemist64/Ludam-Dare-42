@@ -10,6 +10,10 @@ local waresY = h1 + h2 + 12 + 3
 function Trade:load (loc, trader)
   self.loc = loc
   self.trader = trader
+  self.prices = {}
+  for ware,q in pairs(trader.q) do
+    self.prices[ware] = (MAX_WARE_SUPPLY + 2) - q --price is inverse to supply
+  end
   self.h1 = love.graphics.newFont(h1)
   self.h2 = love.graphics.newFont(h2)
   self.h3 = love.graphics.newFont(h3)
@@ -97,6 +101,8 @@ function Trade:draw ()
     for item, n in pairs(self.trader.q) do
       local h = waresY + h3 * i
       love.graphics.print(item, width/2 + 2, h)
+      local price = "Price: "..self.prices[item]
+      love.graphics.print(price, width * 0.75 - price:len() * h3/4, h)
       love.graphics.print(n, width - 54, h)
       i = i + 1
     end
