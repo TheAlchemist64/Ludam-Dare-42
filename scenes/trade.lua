@@ -22,6 +22,12 @@ function Trade:load (loc, trader)
     local mb = Button:new(width/2 - 16, waresY + i * 20, 16, 20, "-")
     pb:setStyle{fSize=h3}
     mb:setStyle{fSize=h3, padding={4,0}}
+    pb['inv'] = player.q
+    pb['ware'] = ware
+    pb['change'] = 1
+    mb['inv'] = player.q
+    mb['ware'] = ware
+    mb['change'] = -1
     table.insert(self.playerB, pb)
     table.insert(self.playerB, mb)
     i = i + 1
@@ -32,11 +38,17 @@ function Trade:load (loc, trader)
     local mb = Button:new(width - 16, waresY + i * 20, 16, 20, "-")
     pb:setStyle{fSize=h3}
     mb:setStyle{fSize=h3, padding={4,0}}
+    pb['inv'] = self.trader.q
+    pb['ware'] = ware
+    pb['change'] = 1
+    mb['inv'] = self.trader.q
+    mb['ware'] = ware
+    mb['change'] = -1
     table.insert(self.traderB, pb)
     table.insert(self.traderB, mb)
     i = i + 1
   end
-  self.deal={player}
+  self.deal={player={}, trader={}}
 end
 
 function Trade:update (dt)
@@ -102,7 +114,8 @@ end
 function checkButtonClicked (x, y, buttons)
   for _,b in ipairs(buttons) do
     if b:clicked(x, y) then
-      print("Clicked!")
+      local q = b['inv'][b['ware']]
+      b['inv'][b['ware']] = q + b['change']
     end
   end
 end
