@@ -140,13 +140,17 @@ function checkButtonClicked (x, y, buttons)
       local side = b['side']
       local ware = b['ware']
       local q = b['inv'][ware]
-      local dq = Trade.deal[side][ware]
-      if not dq then
+      local dlq = Trade.deal[side][ware]
+      if not dlq then
         Trade.deal[side][ware] = 0
-        dq = 0
+        dlq = 0
       end
-      b['inv'][ware] = q + b['change']
-      Trade.deal[side][ware] = dq - b['change']
+      local nq = q + b['change']
+      local ndlq = dlq - b['change']
+      if nq >= 0 and ndlq >= 0 then
+        b['inv'][ware] = q + b['change']
+        Trade.deal[side][ware] = dlq - b['change']
+      end
     end
   end
 end
