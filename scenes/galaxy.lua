@@ -49,12 +49,26 @@ function Galaxy:draw ()
   end
 end
 
+function mouseInStar (x, y, star)
+  return distance(x, y, star.x, star.y) < Star.RADIUS
+end
+
 function Galaxy:mousemoved (x, y, dx, dy)
   for _,star in ipairs(self.stars) do
-    if distance(x, y, star.x, star.y) < Star.RADIUS then
+    if mouseInStar(x, y, star) then
       star.hover = true
     else
       star.hover = false
+    end
+  end
+end
+
+function Galaxy:mousereleased (x, y, button)
+  if button == 1 then
+    for _,star in ipairs(self.stars) do
+      if mouseInStar(x, y, star) then
+        player['loc'] = star.name
+      end
     end
   end
 end
