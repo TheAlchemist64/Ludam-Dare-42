@@ -60,6 +60,10 @@ function Trade:load (loc, trader)
     i = i + 1
   end
   self.deal={player={}, trader={}}
+  self.reset = Button:new(width/2 - 75, finalY + h3, 75, h3 + 2, "Reset")
+  self.reset:setStyle{fSize=h3, padding={16,0}}
+  self.confirm = Button:new(width/2, finalY + h3, 75, h3 + 2, "Confirm")
+  self.confirm:setStyle{fSize=h3, padding={6,0}}
 end
 
 function Trade:update (dt)
@@ -175,6 +179,9 @@ function Trade:draw ()
   love.graphics.print(fpcStr, width/4 - fpcStr:len() * h2/4, finalY)
   local tpcStr = (self.trader.credits - total).." credits"
   love.graphics.print(tpcStr, width * 0.75 - tpcStr:len() * h2/4, finalY)
+  --Show Reset/Confirm buttons
+  self.reset:draw()
+  self.confirm:draw()
 end
 
 function checkButtonClicked (x, y, buttons)
