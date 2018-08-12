@@ -1,5 +1,8 @@
 Star = require "../star"
 Trader = require "../trader"
+Button = require "../button"
+
+local h3 = 16
 
 local Galaxy = {}
 
@@ -8,7 +11,7 @@ function Galaxy:load (nStars)
   for i=1,nStars do
     local name = "Star "..i
     local x = rng:random(name:len() * 2, width - Star.RADIUS)
-    local y = rng:random(Star.RADIUS, height - Star.RADIUS - 12)
+    local y = rng:random(Star.RADIUS, height - Star.RADIUS - 60)
     local valid = true
     for _,star in ipairs(self.stars) do
       if distance(x, y, star.x, star.y) < math.max(name:len() * 2, 32) then
@@ -27,6 +30,10 @@ function Galaxy:load (nStars)
       table.insert(self.stars, Star:new(name, x, y, trader))
     end
   end
+  self.h3 = love.graphics.newFont(h3)
+  local tLabel = "Trade"
+  self.trade = Button:new(16, height - 32, tLabel:len() * h3/2 + 12, h3 + 8, tLabel)
+  self.trade:setStyle{fSize=h3, padding={4,4}}
 end
 
 function Galaxy:update (dt)
@@ -62,6 +69,10 @@ function Galaxy:draw ()
       love.graphics.print(text, tx, ty)
     end
   end
+  --Draw UI
+  love.graphics.setColor(255, 255, 255)
+  love.graphics.rectangle("line", 0, height - 48, width, 48)
+  self.trade:draw()
 end
 
 function mouseInStar (x, y, star)
