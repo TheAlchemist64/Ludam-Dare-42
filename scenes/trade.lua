@@ -101,7 +101,7 @@ function Trade:draw ()
     for item, n in pairs(self.trader.q) do
       local h = waresY + h3 * i
       love.graphics.print(item, width/2 + 2, h)
-      local price = "Price: "..self.prices[item]
+      local price = "Price: "..self.prices[item].."C"
       love.graphics.print(price, width * 0.75 - price:len() * h3/4, h)
       love.graphics.print(n, width - 54, h)
       i = i + 1
@@ -137,6 +137,8 @@ function Trade:draw ()
       if n > 0 then
         local h = dealT + h3 * i
         love.graphics.print(item, width/2 + 2, h)
+        local total = (self.prices[item] * n).."C"
+        love.graphics.print(total, width * 0.75 - total:len() * h3/4, h)
         love.graphics.print(n, width - 54, h)
         i = i + 1
       end
