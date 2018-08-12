@@ -6,7 +6,6 @@ local h1 = 24
 local h2 = 20
 local h3 = 16
 local waresY = h1 + h2 + 12 + 3
-local dealY = waresY
 
 function Trade:load (loc, trader)
   self.loc = loc
@@ -91,7 +90,12 @@ function Trade:draw ()
     love.graphics.print("No Wares", width/2 + 2, waresY)
   end
   --Show Deal
-
+  local dealY = waresY + h3 * MAX_WARE_TYPES
+  local dealT = dealY + h2 + 2
+  love.graphics.setFont(self.h2)
+  love.graphics.print("Deal", width/2 - h2 - 4, dealY)
+  love.graphics.rectangle("line", 0, dealT, width/2, h3 * MAX_WARE_TYPES)
+  love.graphics.rectangle("line", width/2, dealT, width/2, h3 * MAX_WARE_TYPES)
 end
 
 return Trade
