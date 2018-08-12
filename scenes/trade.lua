@@ -17,9 +17,12 @@ function Trade:load (loc, trader)
   self.traderB = {}
   local i = 0
   for ware,q in pairs(self.trader.q) do
-    local b = Button:new(width - 40, waresY + i * 20, 20, 20, "+")
-    b:setStyle{fSize=h3,padding=2}
-    table.insert(self.traderB, b)
+    local pb = Button:new(width - 32, waresY + i * 20, 16, 20, "+")
+    local mb = Button:new(width - 16, waresY + i * 20, 16, 20, "-")
+    pb:setStyle{fSize=h3}
+    mb:setStyle{fSize=h3, padding={4,0}}
+    table.insert(self.traderB, pb)
+    table.insert(self.traderB, mb)
     i = i + 1
   end
 end
@@ -51,7 +54,7 @@ function Trade:draw ()
     for item, n in pairs(player.q) do
       local h = waresY + h3 * i
       love.graphics.print(item, 2, h)
-      love.graphics.print(n, width/2 - 64, h)
+      love.graphics.print(n, width/2 - 54, h)
       i = i + 1
     end
   else
@@ -62,7 +65,7 @@ function Trade:draw ()
     for item, n in pairs(self.trader.q) do
       local h = waresY + h3 * i
       love.graphics.print(item, width/2 + 2, h)
-      love.graphics.print(n, width - 64, h)
+      love.graphics.print(n, width - 54, h)
       i = i + 1
     end
     for _,b in ipairs(self.traderB) do

@@ -9,7 +9,7 @@ function Button:new (x, y, width, height, label)
     label=label,
     style={
       fSize=12,
-      padding=0,
+      padding={0,0},
       bg=nil,
       fg={255,255,255},
       border={255,255,255}
@@ -40,7 +40,7 @@ function Button:draw ()
   love.graphics.setColor(unpack(self.style.fg))
   love.graphics.setFont(self._font)
   local padding = self.style.padding
-  love.graphics.print(self.label, self.x + padding, self.y + padding)
+  love.graphics.print(self.label, self.x + padding[1], self.y + padding[2])
 end
 
 return Button
