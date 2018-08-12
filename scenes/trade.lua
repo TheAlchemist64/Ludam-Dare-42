@@ -126,6 +126,14 @@ function Trade:draw ()
       if n > 0 then
         local h = dealT + h3 * i
         love.graphics.print(item, 2, h)
+        local total = nil
+        if self.prices[item] then
+          total = self.prices[item] * n
+        else
+          total = (MAX_WARE_SUPPLY + 2)/2 * n
+        end
+        total = total.."C"
+        love.graphics.print(total, width/4 - total:len() * h3/4, h)
         love.graphics.print(n, width/2 - 54, h)
         i = i + 1
       end
