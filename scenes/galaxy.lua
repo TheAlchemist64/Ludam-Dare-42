@@ -8,7 +8,13 @@ function Galaxy:load (nStars)
     local name = "Star "..i
     local x = rng:random(name:len() * 2, width - Star.RADIUS)
     local y = rng:random(Star.RADIUS, height - Star.RADIUS - 12)
-    table.insert(self.stars, Star:new(name, x, y))
+    local valid = true
+    for _,star in ipairs(self.stars) do
+      if distance(x, y, star.x, star.y) < math.max(name:len() * 2, 32) then
+        valid = false
+      end
+    end
+    if valid then table.insert(self.stars, Star:new(name, x, y)) end
   end
 end
 

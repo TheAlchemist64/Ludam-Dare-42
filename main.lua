@@ -6,6 +6,10 @@ Trader = require "trader"
 --Trade = require "scenes.trade"
 Galaxy = require "scenes.galaxy"
 
+function distance (x1, y1, x2, y2)
+  return math.sqrt((x2-x1)^2 + (y2-y1)^2)
+end
+
 function love.load()
   width, height = love.graphics.getDimensions()
   rng = love.math.newRandomGenerator()
