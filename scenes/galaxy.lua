@@ -103,6 +103,7 @@ function Galaxy:mousereleased (x, y, button)
     for _,star in ipairs(self.stars) do
       if mouseInStar(x, y, star) then
         player['loc'] = star.name
+        self.curStar = star
       end
     end
     if self.trade:clicked(x, y) then
