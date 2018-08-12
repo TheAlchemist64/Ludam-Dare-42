@@ -7,6 +7,7 @@ MAX_WARE_TYPES = 10
 function love.load()
   width, height = love.graphics.getDimensions()
   player = Trader:new("Player")
+  player.q['fuel'] = 10
   --Test Trader
   zuzu = Trader:new("Zuzu")
   zuzu.q['zufa'] = 10

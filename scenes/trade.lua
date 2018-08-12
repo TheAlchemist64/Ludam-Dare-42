@@ -6,6 +6,7 @@ local h1 = 24
 local h2 = 20
 local h3 = 16
 local waresY = h1 + h2 + 12 + 3
+local dealY = waresY
 
 function Trade:load (loc, trader)
   self.loc = loc
@@ -14,8 +15,19 @@ function Trade:load (loc, trader)
   self.h2 = love.graphics.newFont(h2)
   self.h3 = love.graphics.newFont(h3)
   self.default = love.graphics.newFont()
+  self.playerB = {}
   self.traderB = {}
   local i = 0
+  for ware,q in pairs(player.q) do
+    local pb = Button:new(width/2 - 32, waresY + i * 20, 16, 20, "+")
+    local mb = Button:new(width/2 - 16, waresY + i * 20, 16, 20, "-")
+    pb:setStyle{fSize=h3}
+    mb:setStyle{fSize=h3, padding={4,0}}
+    table.insert(self.playerB, pb)
+    table.insert(self.playerB, mb)
+    i = i + 1
+  end
+  i = 0
   for ware,q in pairs(self.trader.q) do
     local pb = Button:new(width - 32, waresY + i * 20, 16, 20, "+")
     local mb = Button:new(width - 16, waresY + i * 20, 16, 20, "-")
@@ -32,6 +44,7 @@ function Trade:update (dt)
 end
 
 function Trade:draw ()
+  --Show headers
   love.graphics.setColor(255, 255, 255)
   love.graphics.setFont(self.h1)
   love.graphics.print(self.loc, width / 2 - self.loc:len() * h1/4, 0)
@@ -57,6 +70,9 @@ function Trade:draw ()
       love.graphics.print(n, width/2 - 54, h)
       i = i + 1
     end
+    for _,b in ipairs(self.playerB) do
+      b:draw()
+    end
   else
     love.graphics.print("No Wares", 2, waresY)
   end
@@ -74,6 +90,8 @@ function Trade:draw ()
   else
     love.graphics.print("No Wares", width/2 + 2, waresY)
   end
+  --Show Deal
+
 end
 
 return Trade
