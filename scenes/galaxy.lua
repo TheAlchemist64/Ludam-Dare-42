@@ -33,17 +33,21 @@ function Galaxy:draw ()
       local text = "You"
       local tx = nil
       local ty = nil
-      if x > width - text:len() * 6 then
+      local lineTo = {x=nil, y=nil}
+      if x > width - text:len() * 9 then
         tx = x - Star.RADIUS - text:len() * 6
+        lineTo.x = x - Star.RADIUS
       else
         tx = x + Star.RADIUS
+        lineTo.x = tx
       end
       if y < text:len() * 6 then
-        ty = y + Star.RADIUS
+        ty = y - 6
       else
         ty = y - Star.RADIUS - 12
       end
-      love.graphics.line(x, y, tx, ty+6)
+      lineTo.y = ty + 6
+      love.graphics.line(x, y, lineTo.x, lineTo.y)
       love.graphics.print(text, tx, ty)
     end
   end
