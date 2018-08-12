@@ -64,10 +64,25 @@ function Trade:load (loc, trader)
   self.reset:setStyle{fSize=h3, padding={16,0}}
   self.confirm = Button:new(width/2, finalY + h3, 75, h3 + 2, "Confirm")
   self.confirm:setStyle{fSize=h3, padding={6,0}}
+  self.total = 0
 end
 
 function Trade:update (dt)
-  -- body...
+  self.total = 0
+  for item, n in pairs(self.deal['player']) do
+    if n > 0 then
+      if self.prices[item] then
+        self.total = self.total + self.prices[item] * n
+      else
+        self.total = self.total + (MAX_WARE_SUPPLY + 2)/2 * n
+      end
+    end
+  end
+  for item, n in pairs(self.deal['trader']) do
+    if n > 0 then
+      self.total = self.total - self.prices[item] * n
+    end
+  end
 end
 
 function Trade:draw ()
@@ -160,24 +175,9 @@ function Trade:draw ()
   --Show Resulting transaction
   love.graphics.setFont(self.h2)
   love.graphics.print("Result:", 0, finalY)
-  local total = 0
-  for item, n in pairs(self.deal['player']) do
-    if n > 0 then
-      if self.prices[item] then
-        total = total + self.prices[item] * n
-      else
-        total = total + (MAX_WARE_SUPPLY + 2)/2 * n
-      end
-    end
-  end
-  for item, n in pairs(self.deal['trader']) do
-    if n > 0 then
-      total = total - self.prices[item] * n
-    end
-  end
-  local fpcStr = (player.credits + total).." credits"
+  local fpcStr = (player.credits + self.total).." credits"
   love.graphics.print(fpcStr, width/4 - fpcStr:len() * h2/4, finalY)
-  local tpcStr = (self.trader.credits - total).." credits"
+  local tpcStr = (self.trader.credits - self.total).." credits"
   love.graphics.print(tpcStr, width * 0.75 - tpcStr:len() * h2/4, finalY)
   --Show Reset/Confirm buttons
   self.reset:draw()
@@ -218,6 +218,24 @@ function Trade:mousereleased (x, y, button)
         self.trader.q[item] = self.trader.q[item] + q
       end
       self.deal.trader = {}
+    end
+    if self.confirm:clicked(x, y) then
+      for item,q in pairs(self.deal.trader) do
+        if not player.q[item] then
+          player.q[item] = 0
+        end
+        player.q[item] = player.q[item] + q
+      end
+      self.deal.trader = {}
+      player.credits = player.credits + self.total
+      for item,q in pairs(self.deal.player) do
+        if not self.trader.q[item] then
+          self.trader.q[item] = 0
+        end
+        self.trader.q[item] = self.trader.q[item] + q
+      end
+      self.deal.player = {}
+      self.trader.credits = self.trader.credits - self.total
     end
   end
 end
