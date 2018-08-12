@@ -43,4 +43,8 @@ function Button:draw ()
   love.graphics.print(self.label, self.x + padding[1], self.y + padding[2])
 end
 
+function Button:clicked (x, y)
+  return x > self.x and x < self.x + self.width and y > self.y and y < self.y + self.height
+end
+
 return Button

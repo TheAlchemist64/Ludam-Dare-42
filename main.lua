@@ -21,3 +21,7 @@ end
 function love.draw()
   Director:draw()
 end
+
+function love.mousereleased(x, y, button)
+  Director:mousereleased(x, y, button)
+end

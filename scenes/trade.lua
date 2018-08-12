@@ -36,6 +36,7 @@ function Trade:load (loc, trader)
     table.insert(self.traderB, mb)
     i = i + 1
   end
+  self.deal={player}
 end
 
 function Trade:update (dt)
@@ -96,6 +97,21 @@ function Trade:draw ()
   love.graphics.print("Deal", width/2 - h2 - 4, dealY)
   love.graphics.rectangle("line", 0, dealT, width/2, h3 * MAX_WARE_TYPES)
   love.graphics.rectangle("line", width/2, dealT, width/2, h3 * MAX_WARE_TYPES)
+end
+
+function checkButtonClicked (x, y, buttons)
+  for _,b in ipairs(buttons) do
+    if b:clicked(x, y) then
+      print("Clicked!")
+    end
+  end
+end
+
+function Trade:mousereleased (x, y, button)
+  if button == 1 then
+    checkButtonClicked(x, y, self.playerB)
+    checkButtonClicked(x, y, self.traderB)
+  end
 end
 
 return Trade

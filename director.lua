@@ -17,5 +17,11 @@ function Director:draw()
     self.scene:draw()
   end
 end
+--Handle mouse relase/clicks
+function Director:mousereleased (x, y, button)
+  if self.scene ~= nil then
+    self.scene:mousereleased(x, y, button)
+  end
+end
 
 return Director
