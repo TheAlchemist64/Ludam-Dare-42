@@ -31,3 +31,7 @@ end
 function love.mousereleased(x, y, button)
   Director:mousereleased(x, y, button)
 end
+
+function love.mousemoved (x, y, dx, dy)
+  Director:mousemoved(x, y, dx, dy)
+end

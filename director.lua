@@ -19,8 +19,14 @@ function Director:draw()
 end
 --Handle mouse relase/clicks
 function Director:mousereleased (x, y, button)
-  if self.scene ~= nil then
+  if self.scene ~= nil and self.scene.mousereleased then
     self.scene:mousereleased(x, y, button)
+  end
+end
+--Handle mouse movement
+function Director:mousemoved (x, y, dx, dy)
+  if self.scene ~= nil and self.scene.mousemoved then
+    self.scene:mousemoved(x, y, dx, dy)
   end
 end
 

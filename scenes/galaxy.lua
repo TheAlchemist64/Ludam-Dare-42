@@ -49,4 +49,14 @@ function Galaxy:draw ()
   end
 end
 
+function Galaxy:mousemoved (x, y, dx, dy)
+  for _,star in ipairs(self.stars) do
+    if distance(x, y, star.x, star.y) < Star.RADIUS then
+      star.hover = true
+    else
+      star.hover = false
+    end
+  end
+end
+
 return Galaxy
