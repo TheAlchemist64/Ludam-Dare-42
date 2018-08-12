@@ -6,7 +6,7 @@ local h3 = 16
 
 local Galaxy = {}
 
-function Galaxy:load (nStars)
+function Galaxy:generate (nStars)
   self.stars = {}
   for i=1,nStars do
     local name = "Star "..i
@@ -31,10 +31,17 @@ function Galaxy:load (nStars)
     end
   end
   self.h3 = love.graphics.newFont(h3)
+  self.default = love.graphics.newFont()
   local tLabel = "Trade"
   self.trade = Button:new(16, height - 32, tLabel:len() * h3/2 + 12, h3 + 8, tLabel)
   self.trade:setStyle{fSize=h3, padding={4,4}}
   self.curStar = self.stars[1]
+end
+
+function Galaxy:load (nStars)
+  if nStars then
+    self:generate(nStars)
+  end
 end
 
 function Galaxy:update (dt)
@@ -42,6 +49,7 @@ function Galaxy:update (dt)
 end
 
 function Galaxy:draw ()
+  love.graphics.setFont(self.default)
   for _,star in ipairs(self.stars) do
     star:draw()
     if star.name == player['loc'] then

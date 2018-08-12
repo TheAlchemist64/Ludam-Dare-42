@@ -68,6 +68,9 @@ function Trade:load (loc, trader)
   self.reset:setStyle{fSize=h3, padding={16,0}}
   self.confirm = Button:new(width/2, finalY + h3, 75, h3 + 2, "Confirm")
   self.confirm:setStyle{fSize=h3, padding={6,0}}
+  local label = "Exit"
+  self.exit = Button:new(width/2 - label:len() * h3/2, finalY + h3 * 2 + 2, label:len() * h3, h3 + 4, label)
+  self.exit:setStyle{fSize=h3, padding={label:len() * h3/4,2}}
   self.total = 0
 end
 
@@ -186,6 +189,8 @@ function Trade:draw ()
   --Show Reset/Confirm buttons
   self.reset:draw()
   self.confirm:draw()
+  --Show Exit button
+  self.exit:draw()
 end
 
 function checkButtonClicked (x, y, buttons)
