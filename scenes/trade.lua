@@ -251,6 +251,9 @@ function Trade:mousereleased (x, y, button)
       loadButtons()
     end
   end
+  if self.exit:clicked(x, y) then
+    Director:changeScene(Galaxy)
+  end
 end
 
 return Trade
