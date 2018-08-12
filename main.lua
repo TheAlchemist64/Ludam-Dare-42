@@ -19,6 +19,14 @@ function randomKey (t)
   return keys[i]
 end
 
+function inTable (t, query)
+  local has = {}
+  for _,v in ipairs(t) do
+    has[v] = true
+  end
+  return has[query]
+end
+
 function love.load()
   width, height = love.graphics.getDimensions()
   rng = love.math.newRandomGenerator()
@@ -42,7 +50,7 @@ function love.load()
     Drones=8,
     Artifacts=10
   }
-  contraband = {'powder'}
+  contraband = {'Powder'}
   player = Trader:new("Player")
   player.q['Fuel'] = 10
   player['loc'] = 'Star 1'

@@ -22,10 +22,14 @@ function Galaxy:generate (nStars)
       --Generate trader and goods to trade
       local trader = Trader:new("Trader "..i)
       local nGoods = rng:random(1, 3)
-      for i=1,nGoods do
+      local j = 1
+      while j <= nGoods do
         local good = randomKey(goods)
-        local q = rng:random(1, MAX_WARE_SUPPLY)
-        trader.q[good] = q
+        if not inTable(contraband, good) then
+          local q = rng:random(1, MAX_WARE_SUPPLY)
+          trader.q[good] = q
+          j = j + 1
+        end
       end
       table.insert(self.stars, Star:new(name, x, y, trader))
     end
