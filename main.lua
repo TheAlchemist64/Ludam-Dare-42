@@ -3,7 +3,7 @@ MAX_WARE_SUPPLY = 10
 
 Director = require "director"
 Trader = require "trader"
---Trade = require "scenes.trade"
+Trade = require "scenes.trade"
 Galaxy = require "scenes.galaxy"
 
 function distance (x1, y1, x2, y2)

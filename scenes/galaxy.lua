@@ -34,6 +34,7 @@ function Galaxy:load (nStars)
   local tLabel = "Trade"
   self.trade = Button:new(16, height - 32, tLabel:len() * h3/2 + 12, h3 + 8, tLabel)
   self.trade:setStyle{fSize=h3, padding={4,4}}
+  self.curStar = self.stars[1]
 end
 
 function Galaxy:update (dt)
@@ -95,6 +96,9 @@ function Galaxy:mousereleased (x, y, button)
       if mouseInStar(x, y, star) then
         player['loc'] = star.name
       end
+    end
+    if self.trade:clicked(x, y) then
+      Director:changeScene(Trade, player['loc'], self.curStar.trader)
     end
   end
 end
