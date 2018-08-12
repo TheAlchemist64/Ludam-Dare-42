@@ -10,6 +10,15 @@ function distance (x1, y1, x2, y2)
   return math.sqrt((x2-x1)^2 + (y2-y1)^2)
 end
 
+function randomKey (t)
+  local keys = {}
+  for k,v in pairs(t) do
+    table.insert(keys, k)
+  end
+  local i = rng:random(1, #keys)
+  return keys[i]
+end
+
 function love.load()
   width, height = love.graphics.getDimensions()
   rng = love.math.newRandomGenerator()

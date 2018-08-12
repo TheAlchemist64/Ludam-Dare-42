@@ -1,4 +1,5 @@
 Star = require "../star"
+Trader = require "../trader"
 
 local Galaxy = {}
 
@@ -14,7 +15,17 @@ function Galaxy:load (nStars)
         valid = false
       end
     end
-    if valid then table.insert(self.stars, Star:new(name, x, y)) end
+    if valid then
+      --Generate trader and goods to trade
+      local trader = Trader:new("Trader "..i)
+      local nGoods = rng:random(1, 3)
+      for i=1,nGoods do
+        local good = randomKey(goods)
+        local q = rng:random(1, MAX_WARE_SUPPLY)
+        trader.q[good] = q
+      end
+      table.insert(self.stars, Star:new(name, x, y, trader))
+    end
   end
 end
 
