@@ -1,9 +1,9 @@
+MAX_WARE_TYPES = 10
+MAX_WARE_SUPPLY = 10
+
 Director = require "director"
 Trader = require "trader"
 Trade = require "scenes.trade"
-
-MAX_WARE_TYPES = 10
-MAX_WARE_SUPPLY = 10
 
 function love.load()
   width, height = love.graphics.getDimensions()
