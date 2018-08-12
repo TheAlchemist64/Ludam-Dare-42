@@ -16,6 +16,7 @@ function love.load()
   rng:setSeed(os.time())
   player = Trader:new("Player")
   player.q['fuel'] = 10
+  player['loc'] = 'Star 1'
   Director:changeScene(Galaxy, 10)
 end
 

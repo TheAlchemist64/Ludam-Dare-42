@@ -25,6 +25,27 @@ end
 function Galaxy:draw ()
   for _,star in ipairs(self.stars) do
     star:draw()
+    if star.name == player['loc'] then
+      local x = star.x
+      local y = star.y
+      love.graphics.setColor(0,255,0)
+      love.graphics.circle("fill", x, y, Star.RADIUS)
+      local text = "You"
+      local tx = nil
+      local ty = nil
+      if x > width - text:len() * 6 then
+        tx = x - Star.RADIUS - text:len() * 6
+      else
+        tx = x + Star.RADIUS
+      end
+      if y < text:len() * 6 then
+        ty = y + Star.RADIUS
+      else
+        ty = y - Star.RADIUS - 12
+      end
+      love.graphics.line(x, y, tx, ty+6)
+      love.graphics.print(text, tx, ty)
+    end
   end
 end
 
