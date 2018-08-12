@@ -6,7 +6,7 @@ function Galaxy:load (nStars)
   self.stars = {}
   for i=1,nStars do
     local x = rng:random(Star.RADIUS, width - Star.RADIUS)
-    local y = rng:random(Star.RADIUS, height - Star.RADIUS)
+    local y = rng:random(Star.RADIUS, height - Star.RADIUS - 12)
     local name = "Star "..i
     table.insert(self.stars, Star:new(name, x, y))
   end
