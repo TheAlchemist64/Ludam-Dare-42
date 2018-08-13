@@ -51,7 +51,6 @@ function Galaxy:generate (nStars)
             local q = rng:random(1, MAX_WARE_SUPPLY)
             trader.q[good] = q
             star.prices[good] = calcPrice(good, q) --price is inverse to supply
-            print(good..": "..star.prices[good])
             j = j + 1
           end
         end
