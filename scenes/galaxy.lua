@@ -178,6 +178,10 @@ function Galaxy:mousereleased (x, y, button)
       if mouseInStar(x, y, star) and fuel > 0 then
         player['loc'] = star.name
         player.q['Fuel'] = fuel - 1
+        if player.q['Fuel'] == 3 then
+          local body = "You are running out of fuel. You have three days to restock before you strand yourself at a star (Game Over)."
+          Director:pushModal(Confirm:new(400, 100, "Warning: Low on Fuel!", body))
+        end
         self.curStar = star
         day = day + 1
         if day == (TIME_LIMIT + 1) and player.credits < GOAL then
