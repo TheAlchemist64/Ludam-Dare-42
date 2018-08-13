@@ -219,6 +219,17 @@ function checkButtonClicked (x, y, buttons)
   end
 end
 
+function Trade:resetScene ()
+  for item,q in pairs(self.deal.player) do
+    player.q[item] = player.q[item] + q
+  end
+  self.deal.player = {}
+  for item,q in pairs(self.deal.trader) do
+    self.trader.q[item] = self.trader.q[item] + q
+  end
+  self.deal.trader = {}
+end
+
 function Trade:mousereleased (x, y, button)
   if button == 1 then
     checkButtonClicked(x, y, self.playerB)
@@ -226,14 +237,7 @@ function Trade:mousereleased (x, y, button)
     if self.modal and self.modal.ok:clicked(x, y) then
       self.modal = nil
     elseif self.reset:clicked(x, y) then
-      for item,q in pairs(self.deal.player) do
-        player.q[item] = player.q[item] + q
-      end
-      self.deal.player = {}
-      for item,q in pairs(self.deal.trader) do
-        self.trader.q[item] = self.trader.q[item] + q
-      end
-      self.deal.trader = {}
+      self:resetScene()
     elseif self.confirm:clicked(x, y) then
       local body = " does not have enough credits for this deal."
       local modal = Confirm:new(200, 300, "Insufficient credits")
@@ -266,6 +270,7 @@ function Trade:mousereleased (x, y, button)
         loadButtons()
       end
     elseif self.exit:clicked(x, y) then
+      self:resetScene()
       Director:changeScene(Galaxy)
     end
   end
