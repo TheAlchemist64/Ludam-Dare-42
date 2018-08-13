@@ -223,6 +223,15 @@ function Trade:resetScene ()
   self.deal.trader = {}
 end
 
+function hasTooManyItems (trader, deal)
+  for ware,n in pairs(deal) do
+    if trader.q[ware] + n > 20 then
+      return true
+    end
+  end
+  return false
+end
+
 function Trade:mousereleased (x, y, button)
   if button == 1 then
     checkButtonClicked(x, y, self.playerB)
@@ -239,7 +248,10 @@ function Trade:mousereleased (x, y, button)
         modal.body = self.trader.name..body
         Director:pushModal(modal)
       elseif player:getNewWareCount(self.deal.trader) > 10 then
-        local body = "You can only carry up to 10 kinds of goods in your cargo space"
+        local body = "You can only carry up to 10 kinds of goods in your cargo space."
+        Director:pushModal(Confirm:new(200, 100, "Not enough space!", body))
+      elseif hasTooManyItems(player, self.deal.trader) then
+        local body = "You can only carry up to 20 units of a good in your cargo space."
         Director:pushModal(Confirm:new(200, 100, "Not enough space!", body))
       else
         for item,q in pairs(self.deal.trader) do
