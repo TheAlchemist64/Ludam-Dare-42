@@ -72,6 +72,7 @@ function Trade:load (loc, trader)
   self.exit = Button:new(width/2 - label:len() * h3/2, finalY + h3 * 2 + 2, label:len() * h3, h3 + 4, label)
   self.exit:setStyle{fSize=h3, padding={label:len() * h3/4,2}}
   self.total = 0
+  self.modal = nil
 end
 
 function Trade:update (dt)
@@ -191,6 +192,10 @@ function Trade:draw ()
   self.confirm:draw()
   --Show Exit button
   self.exit:draw()
+  --Show modal
+  if self.modal then
+    self.modal:draw()
+  end
 end
 
 function checkButtonClicked (x, y, buttons)
@@ -218,7 +223,9 @@ function Trade:mousereleased (x, y, button)
   if button == 1 then
     checkButtonClicked(x, y, self.playerB)
     checkButtonClicked(x, y, self.traderB)
-    if self.reset:clicked(x, y) then
+    if self.modal and self.modal.ok:clicked(x, y) then
+      self.modal = nil
+    elseif self.reset:clicked(x, y) then
       for item,q in pairs(self.deal.player) do
         player.q[item] = player.q[item] + q
       end
@@ -227,32 +234,40 @@ function Trade:mousereleased (x, y, button)
         self.trader.q[item] = self.trader.q[item] + q
       end
       self.deal.trader = {}
-    end
-    if self.confirm:clicked(x, y) then
-      for item,q in pairs(self.deal.trader) do
-        if not player.q[item] then
-          player.q[item] = 0
+    elseif self.confirm:clicked(x, y) then
+      local body = " does not have enough credits for this deal."
+      local modal = Confirm:new(200, 300, "Insufficient credits")
+      if player.credits + self.total < 0 then
+        modal.body = "Player"..body
+        self.modal = modal
+      elseif self.trader.credits - self.total < 0 then
+        modal.body = self.trader.name..body
+        self.modal = modal
+      else
+        for item,q in pairs(self.deal.trader) do
+          if not player.q[item] then
+            player.q[item] = 0
+          end
+          player.q[item] = player.q[item] + q
         end
-        player.q[item] = player.q[item] + q
+        self.deal.trader = {}
+        player.credits = player.credits + self.total
+        for item,q in pairs(self.deal.player) do
+          if not self.trader.q[item] then
+            self.trader.q[item] = 0
+          end
+          self.trader.q[item] = self.trader.q[item] + q
+          if not self.prices[item] then
+            self.prices[item] = (MAX_WARE_SUPPLY + 2)/2
+          end
+        end
+        self.deal.player = {}
+        self.trader.credits = self.trader.credits - self.total
+        loadButtons()
       end
-      self.deal.trader = {}
-      player.credits = player.credits + self.total
-      for item,q in pairs(self.deal.player) do
-        if not self.trader.q[item] then
-          self.trader.q[item] = 0
-        end
-        self.trader.q[item] = self.trader.q[item] + q
-        if not self.prices[item] then
-          self.prices[item] = (MAX_WARE_SUPPLY + 2)/2
-        end
-      end
-      self.deal.player = {}
-      self.trader.credits = self.trader.credits - self.total
-      loadButtons()
+    elseif self.exit:clicked(x, y) then
+      Director:changeScene(Galaxy)
     end
-  end
-  if self.exit:clicked(x, y) then
-    Director:changeScene(Galaxy)
   end
 end
 
