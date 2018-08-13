@@ -24,6 +24,7 @@ function Galaxy:generate (nStars)
     end
     if valid then
       local trader = nil
+      local bm = false
       if i == 1 then
         trader = Trader:new("Fueling Station")
         trader.q['Fuel'] = 10
@@ -36,6 +37,7 @@ function Galaxy:generate (nStars)
         end
         trader = Trader:new(tName)
         trader.q['Powder'] = rng:random(1, MAX_WARE_SUPPLY)
+        bm = true
       else
         --Generate trader and goods to trade
         trader = Trader:new("Trader "..i)
@@ -50,7 +52,7 @@ function Galaxy:generate (nStars)
           end
         end
       end
-      table.insert(self.stars, Star:new(name, x, y, trader))
+      table.insert(self.stars, Star:new(name, x, y, trader, bm))
     end
   end
   self.h3 = love.graphics.newFont(h3)
@@ -133,7 +135,7 @@ end
 
 function Galaxy:mousereleased (x, y, button)
   if button == 1 then
-    if self.modal.ok:clicked(x, y) then
+    if self.modal and self.modal.ok:clicked(x, y) then
       self.modal.visible = false
     else
       for _,star in ipairs(self.stars) do
@@ -145,7 +147,12 @@ function Galaxy:mousereleased (x, y, button)
         end
       end
       if self.trade:clicked(x, y) then
-        Director:changeScene(Trade, player['loc'], self.curStar.trader)
+        if not player.q['Powder'] or player.q['Powder'] < 1 or
+        self.curStar.black_market==true then
+          Director:changeScene(Trade, player['loc'], self.curStar.trader)
+        else
+          self.modal = Confirm:new(400, 300, "", "")
+        end
       end
     end
   end

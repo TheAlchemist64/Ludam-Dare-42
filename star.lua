@@ -1,7 +1,9 @@
 local Star = {RADIUS=8}
 
-function Star:new (name, x, y, trader)
-  local o = {name=name, x=x, y=y,trader=trader or nil,hover=false}
+function Star:new (name, x, y, trader, bm)
+  local o = {name=name, x=x, y=y,trader=trader or nil,hover=false,
+    black_market=bm
+  }
   setmetatable(o, self)
   self.__index = self
   return o
