@@ -56,7 +56,7 @@ function Trade:load (loc, trader)
   self.trader = trader
   self.prices = {}
   for ware,q in pairs(trader.q) do
-    self.prices[ware] = goods[ware] + (MAX_WARE_SUPPLY + 2) - q --price is inverse to supply
+    self.prices[ware] = goods[ware] + (MAX_WARE_SUPPLY + 1) - q --price is inverse to supply
   end
   self.h1 = love.graphics.newFont(h1)
   self.h2 = love.graphics.newFont(h2)
