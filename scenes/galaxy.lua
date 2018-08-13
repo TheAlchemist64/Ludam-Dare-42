@@ -173,33 +173,27 @@ end
 
 function Galaxy:mousereleased (x, y, button)
   if button == 1 then
-    --[[if self.modal and self.modal.ok:clicked(x, y) then
-      self.modal.visible = false
-    else--]]
-      for _,star in ipairs(self.stars) do
-        local fuel = player.q['Fuel']
-        if mouseInStar(x, y, star) and fuel > 0 then
-          player['loc'] = star.name
-          player.q['Fuel'] = fuel - 1
-          self.curStar = star
-          day = day + 1
-          if day == (TIME_LIMIT + 1) and player.credits < GOAL then
-            Director:changeScene(GameOver)
-          elseif day % 7 == 1 then
-            self:restock()
-            local body = "Markets around the galaxy have restocked with new goods."
-            --self.modal = Confirm:new(400, 100, "Market Update", body)
-            Director:pushModal(Confirm:new(400, 100, "Market Update", body))
-          end
+    for _,star in ipairs(self.stars) do
+      local fuel = player.q['Fuel']
+      if mouseInStar(x, y, star) and fuel > 0 then
+        player['loc'] = star.name
+        player.q['Fuel'] = fuel - 1
+        self.curStar = star
+        day = day + 1
+        if day == (TIME_LIMIT + 1) and player.credits < GOAL then
+          Director:changeScene(GameOver)
+        elseif day % 7 == 1 then
+          self:restock()
+          local body = "Markets around the galaxy have restocked with new goods."
+          Director:pushModal(Confirm:new(400, 100, "Market Update", body))
         end
-      --end
+      end
       if self.trade:clicked(x, y) then
         if not player.q['Powder'] or player.q['Powder'] < 1 or
         self.curStar.black_market==true then
           Director:changeScene(Trade, player['loc'], self.curStar.trader)
         else
           local body = "Sorry, but I don't want the Galactic Police crawling over my shop anytime soon."
-          --self.modal = Confirm:new(400, 100, "Contraband!", body)
           Director:pushModal(Confirm:new(400, 100, "Contraband!", body))
         end
       end
