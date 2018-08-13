@@ -34,6 +34,18 @@ function inTable (t, query)
   return has[query]
 end
 
+function calcPrice (good, q)
+  return goods[good] + (MAX_WARE_SUPPLY + 1) - q
+end
+
+function highestPrice ()
+  return goods['Artifacts'] + MAX_WARE_SUPPLY + 1
+end
+
+function medianPrice ()
+  return MAX_WARE_SUPPLY/2 + 1 --median price of fuel
+end
+
 function love.load()
   width, height = love.graphics.getDimensions()
   rng = love.math.newRandomGenerator()

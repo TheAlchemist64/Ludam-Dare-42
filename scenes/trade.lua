@@ -79,7 +79,7 @@ function Trade:update (dt)
       if self.prices[item] then
         self.total = self.total + self.prices[item] * n
       else
-        self.total = self.total + (MAX_WARE_SUPPLY + 1)/2 * n
+        self.total = self.total + medianPrice() * n
       end
     end
   end
@@ -156,7 +156,7 @@ function Trade:draw ()
         if self.prices[item] then
           total = self.prices[item] * n
         else
-          total = (MAX_WARE_SUPPLY + 1)/2 * n
+          total = medianPrice() * n
         end
         total = total.."C"
         love.graphics.print(total, width/4 - total:len() * h3/4, h)
@@ -260,7 +260,7 @@ function Trade:mousereleased (x, y, button)
           end
           self.trader.q[item] = self.trader.q[item] + q
           if not self.prices[item] then
-            self.prices[item] = (MAX_WARE_SUPPLY + 2)/2
+            self.prices[item] = medianPrice()
           end
         end
         self.deal.player = {}

@@ -38,7 +38,7 @@ function Galaxy:generate (nStars)
         end
         trader = Trader:new(tName)
         trader.q['Powder'] = rng:random(1, MAX_WARE_SUPPLY)
-        star.prices['Powder'] = goods['Powder'] + (MAX_WARE_SUPPLY + 1) - trader.q['Powder']
+        star.prices['Powder'] = calcPrice('Powder', trader.q['Powder'])
         star.black_market = true
       else
         --Generate trader and goods to trade
@@ -50,7 +50,7 @@ function Galaxy:generate (nStars)
           if not inTable(contraband, good) then
             local q = rng:random(1, MAX_WARE_SUPPLY)
             trader.q[good] = q
-            star.prices[good] = goods[good] + (MAX_WARE_SUPPLY + 1) - q --price is inverse to supply
+            star.prices[good] = calcPrice(good, q) --price is inverse to supply
             print(good..": "..star.prices[good])
             j = j + 1
           end
@@ -94,7 +94,7 @@ function Galaxy:restock ()
         if not inTable(contraband, good) then
           local q = rng:random(1, MAX_WARE_SUPPLY)
           star.trader.q[good] = q
-          star.prices[good] = goods[good] + (MAX_WARE_SUPPLY + 1) - q --price is inverse to supply
+          star.prices[good] = calcPrice(good, q) --price is inverse to supply
           j = j + 1
         end
       end
