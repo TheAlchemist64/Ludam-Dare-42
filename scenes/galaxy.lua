@@ -56,7 +56,7 @@ function Galaxy:generate (nStars)
   local tLabel = "Trade"
   self.trade = Button:new(16, height - 32, tLabel:len() * h3/2 + 12, h3 + 8, tLabel)
   self.trade:setStyle{fSize=h3, padding={4,4}}
-  self.curStar = self.stars[2]
+  self.curStar = self.stars[1]
 end
 
 function Galaxy:load (nStars)
