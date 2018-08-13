@@ -225,7 +225,7 @@ end
 
 function hasTooManyItems (trader, deal)
   for ware,n in pairs(deal) do
-    if trader.q[ware] + n > 20 then
+    if trader.q[ware] and trader.q[ware] + n > 20 then
       return true
     end
   end
