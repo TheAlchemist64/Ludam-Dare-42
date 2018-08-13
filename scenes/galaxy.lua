@@ -84,6 +84,7 @@ function Galaxy:restock ()
       star.trader.q['Fuel'] = 10
     elseif i > 1 and i < 4 then
       star.trader.q['Powder'] = rng:random(1, MAX_WARE_SUPPLY)
+      star.prices['Powder'] = calcPrice('Powder', star.trader.q['Powder'])
     else
       --Generate goods to trade
       local nGoods = rng:random(1, 3)
