@@ -1,5 +1,7 @@
 MAX_WARE_TYPES = 10
 MAX_WARE_SUPPLY = 10
+GOAL = 10000
+TIME_LIMIT = 28
 
 Button = require "../button"
 Confirm = require "modal"
@@ -7,6 +9,7 @@ Director = require "director"
 Trader = require "trader"
 Trade = require "scenes.trade"
 Galaxy = require "scenes.galaxy"
+GameOver = require "scenes.gameover"
 
 function distance (x1, y1, x2, y2)
   return math.sqrt((x2-x1)^2 + (y2-y1)^2)

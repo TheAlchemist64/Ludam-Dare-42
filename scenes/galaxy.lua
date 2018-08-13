@@ -134,7 +134,7 @@ function Galaxy:draw ()
   love.graphics.print("Credits: "..player.credits, 0, 0)
   local f = "Fuel: "..player.q['Fuel']
   love.graphics.print(f, width/2 - f:len() * h3/4, 0)
-  local timeLeft = 29 - day
+  local timeLeft = TIME_LIMIT + 1 - day
   local tlText = timeLeft.." days left"
   love.graphics.print(tlText, width - tlText:len() * h3/2, 0)
   -- Bottom
@@ -171,7 +171,9 @@ function Galaxy:mousereleased (x, y, button)
           player.q['Fuel'] = fuel - 1
           self.curStar = star
           day = day + 1
-          if day % 7 == 1 then
+          if day == (TIME_LIMIT + 1) and player.credits < GOAL then
+            Director:changeScene(GameOver)
+          elseif day % 7 == 1 then
             self:restock()
             local body = "Markets around the galaxy have restocked with new goods."
             self.modal = Confirm:new(400, 100, "Market Update", body)
