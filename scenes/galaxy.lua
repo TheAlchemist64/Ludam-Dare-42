@@ -117,8 +117,10 @@ end
 function Galaxy:mousereleased (x, y, button)
   if button == 1 then
     for _,star in ipairs(self.stars) do
-      if mouseInStar(x, y, star) then
+      local fuel = player.q['Fuel']
+      if mouseInStar(x, y, star) and fuel > 0 then
         player['loc'] = star.name
+        player.q['Fuel'] = fuel - 1
         self.curStar = star
       end
     end
