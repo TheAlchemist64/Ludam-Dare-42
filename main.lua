@@ -3,7 +3,7 @@ MAX_WARE_SUPPLY = 10
 STARTING_MONEY = 20
 TRADER_DEFAULT_MONEY = 120
 GOAL = 400
-TIME_LIMIT = 28
+TIME_LIMIT = 35
 
 Button = require "../button"
 Confirm = require "modal"
