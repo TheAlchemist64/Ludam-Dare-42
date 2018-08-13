@@ -1,6 +1,5 @@
 Star = require "../star"
 Trader = require "../trader"
-Button = require "../button"
 
 local h3 = 16
 
@@ -60,6 +59,7 @@ function Galaxy:generate (nStars)
   self.trade = Button:new(16, height - 32, tLabel:len() * h3/2 + 12, h3 + 8, tLabel)
   self.trade:setStyle{fSize=h3, padding={4,4}}
   self.curStar = self.stars[1]
+  self.modal = nil
 end
 
 function Galaxy:load (nStars)
@@ -112,6 +112,9 @@ function Galaxy:draw ()
   -- Bottom
   love.graphics.rectangle("line", 0, height - 48, width, 48)
   self.trade:draw()
+  if self.modal then
+    self.modal:draw()
+  end
 end
 
 function mouseInStar (x, y, star)
@@ -130,16 +133,20 @@ end
 
 function Galaxy:mousereleased (x, y, button)
   if button == 1 then
-    for _,star in ipairs(self.stars) do
-      local fuel = player.q['Fuel']
-      if mouseInStar(x, y, star) and fuel > 0 then
-        player['loc'] = star.name
-        player.q['Fuel'] = fuel - 1
-        self.curStar = star
+    if self.modal.ok:clicked(x, y) then
+      self.modal.visible = false
+    else
+      for _,star in ipairs(self.stars) do
+        local fuel = player.q['Fuel']
+        if mouseInStar(x, y, star) and fuel > 0 then
+          player['loc'] = star.name
+          player.q['Fuel'] = fuel - 1
+          self.curStar = star
+        end
       end
-    end
-    if self.trade:clicked(x, y) then
-      Director:changeScene(Trade, player['loc'], self.curStar.trader)
+      if self.trade:clicked(x, y) then
+        Director:changeScene(Trade, player['loc'], self.curStar.trader)
+      end
     end
   end
 end
