@@ -238,6 +238,9 @@ function Trade:mousereleased (x, y, button)
       elseif self.trader.credits - self.total < 0 then
         modal.body = self.trader.name..body
         Director:pushModal(modal)
+      elseif player:getNewWareCount(self.deal.trader) > 10 then
+        local body = "You can only carry up to 10 kinds of goods in your cargo space"
+        Director:pushModal(Confirm:new(200, 100, "Not enough space!", body))
       else
         for item,q in pairs(self.deal.trader) do
           if not player.q[item] then

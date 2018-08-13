@@ -7,4 +7,19 @@ function Trader:new(name)
   return o
 end
 
+function Trader:getNewWareCount(potential)
+  local q = {}
+  for ware,n in pairs(self.q) do
+    q[ware] = true
+  end
+  for ware,n in pairs(potential) do
+    q[ware] = true
+  end
+  local count = 0
+  for ware,bool in pairs(q) do
+    count = count + 1
+  end
+  return count
+end
+
 return Trader
