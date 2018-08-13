@@ -9,6 +9,7 @@ Button = require "../button"
 Confirm = require "modal"
 Director = require "director"
 Trader = require "trader"
+Intro = require "scenes.intro"
 Trade = require "scenes.trade"
 Galaxy = require "scenes.galaxy"
 GameOver = require "scenes.gameover"
@@ -78,7 +79,8 @@ function love.load()
   --player.q['Powder'] = 20--
   player['loc'] = "Jav'n"
   day = 1
-  Director:changeScene(Galaxy, 13)
+  Galaxy:generate(13)
+  Director:changeScene(Intro)
 end
 
 function love.update(dt)
