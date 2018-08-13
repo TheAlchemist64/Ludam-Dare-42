@@ -2,7 +2,7 @@ MAX_WARE_TYPES = 10
 MAX_WARE_SUPPLY = 10
 STARTING_MONEY = 20
 TRADER_DEFAULT_MONEY = 120
-GOAL = 400
+GOAL = 50 -- Lower for test purposes
 TIME_LIMIT = 35
 
 Button = require "../button"
@@ -12,6 +12,7 @@ Trader = require "trader"
 Trade = require "scenes.trade"
 Galaxy = require "scenes.galaxy"
 GameOver = require "scenes.gameover"
+Victory = require "scenes.victory"
 
 function distance (x1, y1, x2, y2)
   return math.sqrt((x2-x1)^2 + (y2-y1)^2)

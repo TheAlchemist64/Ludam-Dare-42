@@ -184,7 +184,9 @@ function Galaxy:mousereleased (x, y, button)
         end
         self.curStar = star
         day = day + 1
-        if (day == (TIME_LIMIT + 1) and player.credits < GOAL) or (player.q['Fuel'] == 0 and not star.trader.q['Fuel']) then
+        if player.credits >= GOAL then
+          Director:changeScene(Victory)
+        elseif (day == (TIME_LIMIT + 1) and player.credits < GOAL) or (player.q['Fuel'] == 0 and not star.trader.q['Fuel']) then
           Director:changeScene(GameOver)
         elseif day % 7 == 1 then
           self:restock()
