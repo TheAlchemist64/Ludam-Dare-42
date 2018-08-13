@@ -37,7 +37,6 @@ function Galaxy:generate (nStars)
         end
         trader = Trader:new(tName)
         trader.q['Powder'] = rng:random(1, MAX_WARE_SUPPLY)
-        print(name)
       else
         --Generate trader and goods to trade
         trader = Trader:new("Trader "..i)
