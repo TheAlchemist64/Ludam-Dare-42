@@ -65,7 +65,6 @@ function Galaxy:generate (nStars)
   self.trade = Button:new(16, height - 32, tLabel:len() * h3/2 + 12, h3 + 8, tLabel)
   self.trade:setStyle{fSize=h3, padding={4,4}}
   self.curStar = self.stars[1]
-  self.modal = nil
 end
 
 function Galaxy:findStarByName (name)
@@ -156,9 +155,6 @@ function Galaxy:draw ()
   -- Bottom
   love.graphics.rectangle("line", 0, height - 48, width, 48)
   self.trade:draw()
-  if self.modal then
-    self.modal:draw()
-  end
 end
 
 function mouseInStar (x, y, star)
@@ -177,9 +173,9 @@ end
 
 function Galaxy:mousereleased (x, y, button)
   if button == 1 then
-    if self.modal and self.modal.ok:clicked(x, y) then
+    --[[if self.modal and self.modal.ok:clicked(x, y) then
       self.modal.visible = false
-    else
+    else--]]
       for _,star in ipairs(self.stars) do
         local fuel = player.q['Fuel']
         if mouseInStar(x, y, star) and fuel > 0 then
@@ -192,17 +188,19 @@ function Galaxy:mousereleased (x, y, button)
           elseif day % 7 == 1 then
             self:restock()
             local body = "Markets around the galaxy have restocked with new goods."
-            self.modal = Confirm:new(400, 100, "Market Update", body)
+            --self.modal = Confirm:new(400, 100, "Market Update", body)
+            Director:pushModal(Confirm:new(400, 100, "Market Update", body))
           end
         end
-      end
+      --end
       if self.trade:clicked(x, y) then
         if not player.q['Powder'] or player.q['Powder'] < 1 or
         self.curStar.black_market==true then
           Director:changeScene(Trade, player['loc'], self.curStar.trader)
         else
           local body = "Sorry, but I don't want the Galactic Police crawling over my shop anytime soon."
-          self.modal = Confirm:new(400, 100, "Contraband!", body)
+          --self.modal = Confirm:new(400, 100, "Contraband!", body)
+          Director:pushModal(Confirm:new(400, 100, "Contraband!", body))
         end
       end
     end

@@ -69,7 +69,6 @@ function Trade:load (loc, trader)
   self.exit = Button:new(width/2 - label:len() * h3/2, finalY + h3 * 2 + 2, label:len() * h3, h3 + 4, label)
   self.exit:setStyle{fSize=h3, padding={label:len() * h3/4,2}}
   self.total = 0
-  self.modal = nil
 end
 
 function Trade:update (dt)
@@ -190,10 +189,6 @@ function Trade:draw ()
   self.confirm:draw()
   --Show Exit button
   self.exit:draw()
-  --Show modal
-  if self.modal then
-    self.modal:draw()
-  end
 end
 
 function checkButtonClicked (x, y, buttons)
@@ -232,19 +227,17 @@ function Trade:mousereleased (x, y, button)
   if button == 1 then
     checkButtonClicked(x, y, self.playerB)
     checkButtonClicked(x, y, self.traderB)
-    if self.modal and self.modal.ok:clicked(x, y) then
-      self.modal = nil
-    elseif self.reset:clicked(x, y) then
+    if self.reset:clicked(x, y) then
       self:resetScene()
     elseif self.confirm:clicked(x, y) then
       local body = " does not have enough credits for this deal."
       local modal = Confirm:new(200, 300, "Insufficient credits")
       if player.credits + self.total < 0 then
         modal.body = "Player"..body
-        self.modal = modal
+        Director:pushModal(modal)
       elseif self.trader.credits - self.total < 0 then
         modal.body = self.trader.name..body
-        self.modal = modal
+        Director:pushModal(modal)
       else
         for item,q in pairs(self.deal.trader) do
           if not player.q[item] then
