@@ -84,6 +84,7 @@ function Galaxy:restock ()
         end
       end
     end
+    star.trader.credits = math.max(star.trader.credits, TRADER_DEFAULT_MONEY)
   end
 end
 
