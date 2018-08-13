@@ -110,7 +110,10 @@ function Galaxy:draw ()
   love.graphics.setFont(self.h3)
   love.graphics.print("Credits: "..player.credits, 0, 0)
   local f = "Fuel: "..player.q['Fuel']
-  love. graphics.print(f, width/2 - f:len() * h3/4, 0)
+  love.graphics.print(f, width/2 - f:len() * h3/4, 0)
+  local timeLeft = 29 - day
+  local tlText = timeLeft.." days left"
+  love.graphics.print(tlText, width - tlText:len() * h3/2, 0)
   -- Bottom
   love.graphics.rectangle("line", 0, height - 48, width, 48)
   self.trade:draw()
@@ -144,6 +147,7 @@ function Galaxy:mousereleased (x, y, button)
           player['loc'] = star.name
           player.q['Fuel'] = fuel - 1
           self.curStar = star
+          day = day + 1
         end
       end
       if self.trade:clicked(x, y) then
