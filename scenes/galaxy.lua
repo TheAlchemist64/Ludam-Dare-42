@@ -93,6 +93,8 @@ function Galaxy:draw ()
   -- Top
   love.graphics.setFont(self.h3)
   love.graphics.print("Credits: "..player.credits, 0, 0)
+  local f = "Fuel: "..player.q['Fuel']
+  love. graphics.print(f, width/2 - f:len() * h3/4, 0)
   -- Bottom
   love.graphics.rectangle("line", 0, height - 48, width, 48)
   self.trade:draw()
