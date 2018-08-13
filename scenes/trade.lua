@@ -6,9 +6,9 @@ local h1 = 24
 local h2 = 20
 local h3 = 16
 local waresY = h1 + h2 + 12 + 3
-local dealY = waresY + h3 * MAX_WARE_TYPES
+local dealY = waresY + (h3 + 4) * MAX_WARE_TYPES
 local dealT = dealY + h2 + 2
-local finalY = dealT + h3 * MAX_WARE_TYPES
+local finalY = dealT + (h3 + 4) * MAX_WARE_TYPES
 
 function loadButtons ()
   Trade.playerB = {}
@@ -106,8 +106,8 @@ function Trade:draw ()
   love.graphics.print(tc, width * 0.75 - tc:len() * 3, h1 + h2)
   --Show wares
   love.graphics.setFont(self.h3)
-  love.graphics.rectangle("line", 0, waresY, width/2, h3 * MAX_WARE_TYPES)
-  love.graphics.rectangle("line", width/2, waresY, width/2, h3 * MAX_WARE_TYPES)
+  love.graphics.rectangle("line", 0, waresY, width/2, (h3 + 4) * MAX_WARE_TYPES)
+  love.graphics.rectangle("line", width/2, waresY, width/2, (h3 + 4) * MAX_WARE_TYPES)
   if next(player.q) then
     local i = 0
     for item, n in pairs(player.q) do
@@ -143,8 +143,8 @@ function Trade:draw ()
   love.graphics.setFont(self.h2)
   love.graphics.print("Deal", width/2 - h2 - 4, dealY)
   love.graphics.setFont(self.h3)
-  love.graphics.rectangle("line", 0, dealT, width/2, h3 * MAX_WARE_TYPES)
-  love.graphics.rectangle("line", width/2, dealT, width/2, h3 * MAX_WARE_TYPES)
+  love.graphics.rectangle("line", 0, dealT, width/2, (h3 + 4) * MAX_WARE_TYPES)
+  love.graphics.rectangle("line", width/2, dealT, width/2, (h3 + 4) * MAX_WARE_TYPES)
   if next(self.deal['player']) then
     local i = 0
     for item, n in pairs(self.deal['player']) do
