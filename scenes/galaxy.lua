@@ -24,10 +24,11 @@ function Galaxy:generate (nStars)
     end
     if valid then
       local trader = nil
-      local bm = false
+      local star = Star:new(name, x, y, nil, false)
       if i == 1 then
         trader = Trader:new("Fueling Station")
         trader.q['Fuel'] = 10
+        star.prices['Fuel'] = 2
       elseif i > 1 and i < 4 then
         local tName = nil
         if i == 2 then
@@ -37,7 +38,8 @@ function Galaxy:generate (nStars)
         end
         trader = Trader:new(tName)
         trader.q['Powder'] = rng:random(1, MAX_WARE_SUPPLY)
-        bm = true
+        star.prices['Powder'] = goods['Powder'] + (MAX_WARE_SUPPLY + 1) - trader.q['Powder']
+        star.black_market = true
       else
         --Generate trader and goods to trade
         trader = Trader:new("Trader "..i)
@@ -48,11 +50,14 @@ function Galaxy:generate (nStars)
           if not inTable(contraband, good) then
             local q = rng:random(1, MAX_WARE_SUPPLY)
             trader.q[good] = q
+            star.prices[good] = goods[good] + (MAX_WARE_SUPPLY + 1) - q --price is inverse to supply
+            print(good..": "..star.prices[good])
             j = j + 1
           end
         end
       end
-      table.insert(self.stars, Star:new(name, x, y, trader, bm))
+      star.trader = trader
+      table.insert(self.stars, star)
     end
   end
   self.h3 = love.graphics.newFont(h3)
@@ -62,6 +67,15 @@ function Galaxy:generate (nStars)
   self.trade:setStyle{fSize=h3, padding={4,4}}
   self.curStar = self.stars[1]
   self.modal = nil
+end
+
+function Galaxy:findStarByName (name)
+  for _,star in ipairs(self.stars) do
+    if star.name == name then
+      return star
+    end
+  end
+  return nil
 end
 
 function Galaxy:restock ()
@@ -80,6 +94,7 @@ function Galaxy:restock ()
         if not inTable(contraband, good) then
           local q = rng:random(1, MAX_WARE_SUPPLY)
           star.trader.q[good] = q
+          star.prices[good] = goods[good] + (MAX_WARE_SUPPLY + 1) - q --price is inverse to supply
           j = j + 1
         end
       end

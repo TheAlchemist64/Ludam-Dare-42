@@ -54,10 +54,7 @@ end
 function Trade:load (loc, trader)
   self.loc = loc
   self.trader = trader
-  self.prices = {}
-  for ware,q in pairs(trader.q) do
-    self.prices[ware] = goods[ware] + (MAX_WARE_SUPPLY + 1) - q --price is inverse to supply
-  end
+  self.prices = Galaxy:findStarByName(loc).prices
   self.h1 = love.graphics.newFont(h1)
   self.h2 = love.graphics.newFont(h2)
   self.h3 = love.graphics.newFont(h3)
@@ -131,6 +128,7 @@ function Trade:draw ()
     for item, n in pairs(self.trader.q) do
       local h = waresY + h3 * i
       love.graphics.print(item, width/2 + 2, h)
+      --print(next(self.prices))
       local price = "Price: "..self.prices[item].."C"
       love.graphics.print(price, width * 0.75 - price:len() * h3/4, h)
       love.graphics.print(n, width - 54, h)
