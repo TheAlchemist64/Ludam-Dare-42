@@ -9,7 +9,12 @@ local Galaxy = {}
 function Galaxy:generate (nStars)
   self.stars = {}
   for i=1,nStars do
-    local name = "Star "..i
+    local name = nil
+    if i == 1 then
+      name = "Jav'n"
+    else
+      name = "Star "..i
+    end
     local x = rng:random(name:len() * 2, width - Star.RADIUS)
     local y = rng:random(Star.RADIUS + 18, height - Star.RADIUS - 60)
     local valid = true
@@ -20,18 +25,24 @@ function Galaxy:generate (nStars)
       end
     end
     if valid then
-      --Generate trader and goods to trade
-      local trader = Trader:new("Trader "..i)
-      local nGoods = rng:random(1, 3)
-      local j = 1
-      while j <= nGoods do
-        local good = randomKey(goods)
-        if good == "Fuel" then fuelAvail = true end
-        if not inTable(contraband, good) then
-          local q = rng:random(1, MAX_WARE_SUPPLY)
-          trader.q[good] = q
-          j = j + 1
-          print(good)
+      local trader = nil
+      if i == 1 then
+        trader = Trader:new("Fueling Station")
+        trader.q['Fuel'] = 10
+      else
+        --Generate trader and goods to trade
+        trader = Trader:new("Trader "..i)
+        local nGoods = rng:random(1, 3)
+        local j = 1
+        while j <= nGoods do
+          local good = randomKey(goods)
+          if good == "Fuel" then fuelAvail = true end
+          if not inTable(contraband, good) then
+            local q = rng:random(1, MAX_WARE_SUPPLY)
+            trader.q[good] = q
+            j = j + 1
+            print(good)
+          end
         end
       end
       table.insert(self.stars, Star:new(name, x, y, trader))
@@ -45,7 +56,7 @@ function Galaxy:generate (nStars)
   local tLabel = "Trade"
   self.trade = Button:new(16, height - 32, tLabel:len() * h3/2 + 12, h3 + 8, tLabel)
   self.trade:setStyle{fSize=h3, padding={4,4}}
-  self.curStar = self.stars[1]
+  self.curStar = self.stars[2]
 end
 
 function Galaxy:load (nStars)

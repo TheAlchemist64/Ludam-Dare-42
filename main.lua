@@ -53,8 +53,8 @@ function love.load()
   contraband = {'Powder'}
   player = Trader:new("Player")
   player.q['Fuel'] = 10
-  player['loc'] = 'Star 1'
-  Director:changeScene(Galaxy, 10)
+  player['loc'] = 'Star 2'
+  Director:changeScene(Galaxy, 11)
 end
 
 function love.update(dt)
