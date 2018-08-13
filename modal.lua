@@ -19,6 +19,10 @@ function Confirm:draw ()
     love.graphics.rectangle("fill", x, y, self.width, self.height)
     love.graphics.setColor(255, 255, 255)
     love.graphics.rectangle("line", x, y, self.width, self.height)
+    local titleX = width/2 - self.title:len() * 4
+    love.graphics.print(self.title, titleX, y)
+    love.graphics.line(x, y + 18, x + self.width, y + 16)
+    love.graphics.printf(self.body, x, y + 18, self.width)
     self.ok:draw()
   end
 end

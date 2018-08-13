@@ -151,7 +151,8 @@ function Galaxy:mousereleased (x, y, button)
         self.curStar.black_market==true then
           Director:changeScene(Trade, player['loc'], self.curStar.trader)
         else
-          self.modal = Confirm:new(400, 300, "", "")
+          local body = "Sorry, but I don't want the Galactic Police crawling over my shop anytime soon."
+          self.modal = Confirm:new(400, 100, "Contraband!", body)
         end
       end
     end
