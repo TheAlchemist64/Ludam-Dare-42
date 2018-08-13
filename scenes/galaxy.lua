@@ -64,6 +64,29 @@ function Galaxy:generate (nStars)
   self.modal = nil
 end
 
+function Galaxy:restock ()
+  for i,star in ipairs(self.stars) do
+    star.trader.q = {}
+    if i == 1 then
+      star.trader.q['Fuel'] = 10
+    elseif i > 1 and i < 4 then
+      star.trader.q['Powder'] = rng:random(1, MAX_WARE_SUPPLY)
+    else
+      --Generate goods to trade
+      local nGoods = rng:random(1, 3)
+      local j = 1
+      while j <= nGoods do
+        local good = randomKey(goods)
+        if not inTable(contraband, good) then
+          local q = rng:random(1, MAX_WARE_SUPPLY)
+          star.trader.q[good] = q
+          j = j + 1
+        end
+      end
+    end
+  end
+end
+
 function Galaxy:load (nStars)
   if nStars then
     self:generate(nStars)
@@ -148,6 +171,11 @@ function Galaxy:mousereleased (x, y, button)
           player.q['Fuel'] = fuel - 1
           self.curStar = star
           day = day + 1
+          if day % 7 == 1 then
+            self:restock()
+            local body = "Markets around the galaxy have restocked with new goods."
+            self.modal = Confirm:new(400, 100, "Market Update", body)
+          end
         end
       end
       if self.trade:clicked(x, y) then
