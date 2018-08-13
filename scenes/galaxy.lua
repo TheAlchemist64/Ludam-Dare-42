@@ -109,7 +109,9 @@ function Galaxy:load (nStars)
 end
 
 function Galaxy:update (dt)
-
+  if player.credits >= GOAL then
+    Director:changeScene(Victory)
+  end
 end
 
 function Galaxy:draw ()
