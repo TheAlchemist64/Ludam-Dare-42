@@ -74,6 +74,16 @@ function love.load()
   player = Trader:new("Player")
   player.credits = STARTING_MONEY
   player.q['Fuel'] = 10
+  --[[For testing UI
+  player.q['Perfume'] = 3
+  player.q['Food'] = 3
+  player.q['Computers'] = 3
+  player.q['Fabric'] = 3
+  player.q['Gems'] = 3
+  player.q['Gold'] = 3
+  player.q['Platinum'] = 3
+  player.q['Machinery']=3
+  player.q['Clothing']=3]]--
   player['loc'] = "Jav'n"
   day = 1
   Director:changeScene(Galaxy, 13)
