@@ -18,7 +18,6 @@ function Galaxy:generate (nStars)
     local x = rng:random(name:len() * 2, width - Star.RADIUS)
     local y = rng:random(Star.RADIUS + 18, height - Star.RADIUS - 60)
     local valid = true
-    local fuelAvail = false
     for _,star in ipairs(self.stars) do
       if distance(x, y, star.x, star.y) < math.max(name:len() * 2, 32) then
         valid = false
@@ -36,7 +35,6 @@ function Galaxy:generate (nStars)
         local j = 1
         while j <= nGoods do
           local good = randomKey(goods)
-          if good == "Fuel" then fuelAvail = true end
           if not inTable(contraband, good) then
             local q = rng:random(1, MAX_WARE_SUPPLY)
             trader.q[good] = q
@@ -47,9 +45,6 @@ function Galaxy:generate (nStars)
       end
       table.insert(self.stars, Star:new(name, x, y, trader))
     end
-  end
-  if not fuelAvail then
-    print('No fuel available')
   end
   self.h3 = love.graphics.newFont(h3)
   self.default = love.graphics.newFont()
