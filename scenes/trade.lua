@@ -231,7 +231,7 @@ function Trade:mousereleased (x, y, button)
       self:resetScene()
     elseif self.confirm:clicked(x, y) then
       local body = " does not have enough credits for this deal."
-      local modal = Confirm:new(200, 300, "Insufficient credits")
+      local modal = Confirm:new(200, 100, "Insufficient credits")
       if player.credits + self.total < 0 then
         modal.body = "Player"..body
         Director:pushModal(modal)
