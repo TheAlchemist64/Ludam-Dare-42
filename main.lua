@@ -54,7 +54,7 @@ function love.load()
   player = Trader:new("Player")
   player.q['Fuel'] = 10
   player['loc'] = "Jav'n"
-  Director:changeScene(Galaxy, 11)
+  Director:changeScene(Galaxy, 13)
 end
 
 function love.update(dt)

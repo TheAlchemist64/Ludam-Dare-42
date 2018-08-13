@@ -28,6 +28,16 @@ function Galaxy:generate (nStars)
       if i == 1 then
         trader = Trader:new("Fueling Station")
         trader.q['Fuel'] = 10
+      elseif i > 1 and i < 4 then
+        local tName = nil
+        if i == 2 then
+          tName = "Scooter"
+        else
+          tName = "Mikey"
+        end
+        trader = Trader:new(tName)
+        trader.q['Powder'] = rng:random(1, MAX_WARE_SUPPLY)
+        print(name)
       else
         --Generate trader and goods to trade
         trader = Trader:new("Trader "..i)
@@ -39,7 +49,6 @@ function Galaxy:generate (nStars)
             local q = rng:random(1, MAX_WARE_SUPPLY)
             trader.q[good] = q
             j = j + 1
-            print(good)
           end
         end
       end
