@@ -1,7 +1,9 @@
 local Trader = {}
 
+local TRADER_STARTING_MONEY = 60
+
 function Trader:new(name)
-  local o = {name = name, credits = 1000, q={}, price={}}
+  local o = {name = name, credits = TRADER_STARTING_MONEY, q={}, price={}}
   setmetatable(o, self)
   self.__index = self
   return o

@@ -1,6 +1,7 @@
 MAX_WARE_TYPES = 10
 MAX_WARE_SUPPLY = 10
-GOAL = 10000
+STARTING_MONEY = 20
+GOAL = 400
 TIME_LIMIT = 28
 
 Button = require "../button"
@@ -57,6 +58,7 @@ function love.load()
   }
   contraband = {'Powder'}
   player = Trader:new("Player")
+  player.credits = STARTING_MONEY
   player.q['Fuel'] = 10
   player['loc'] = "Jav'n"
   day = 1
