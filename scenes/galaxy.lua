@@ -1,6 +1,3 @@
-Star = require "../star"
-Trader = require "../trader"
-
 local h3 = 16
 
 local Galaxy = {}

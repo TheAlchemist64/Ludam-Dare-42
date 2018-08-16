@@ -1,5 +1,3 @@
-Button = require "Button"
-
 local Trade = {}
 
 local h1 = 24
